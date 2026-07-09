@@ -14,6 +14,19 @@
 
 # production
 /build
+dist
+dist-ssr
+*.local
+
+# editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # misc
 .DS_Store
