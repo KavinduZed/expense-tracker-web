@@ -1,10 +1,9 @@
 import type { ReactElement, ReactNode } from 'react'
 import { render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from '../auth/AuthProvider'
-import { theme } from '../theme'
+import { ColorModeProvider } from '../theme/ColorModeProvider'
 import type { UserDto } from '../types/api'
 
 // Base URL configured for tests in vite.config.ts (test.env).
@@ -22,13 +21,13 @@ function AllProviders({ children, initialEntries }: { children: ReactNode; initi
     defaultOptions: { queries: { retry: false } },
   })
   return (
-    <ThemeProvider theme={theme}>
+    <ColorModeProvider>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
         </AuthProvider>
       </QueryClientProvider>
-    </ThemeProvider>
+    </ColorModeProvider>
   )
 }
 
