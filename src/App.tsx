@@ -1,8 +1,10 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
+import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import BoardsPage from './pages/BoardsPage'
+import CategoriesPage from './pages/CategoriesPage'
+import ExpensesPage from './pages/ExpensesPage'
 import ComingSoon from './pages/ComingSoon'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicOnlyRoute from './components/PublicOnlyRoute'
@@ -30,10 +32,10 @@ function App() {
       {/* Everything below requires a session and renders inside the app shell */}
       <Route element={<ProtectedRoute />}>
         <Route element={<AuthedLayout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<DashboardPage />} />
           <Route path="/boards" element={<BoardsPage />} />
-          <Route path="/expenses" element={<ComingSoon title="Expenses" />} />
-          <Route path="/categories" element={<ComingSoon title="Categories" />} />
+          <Route path="/expenses" element={<ExpensesPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/profile" element={<ComingSoon title="Profile" />} />
         </Route>
       </Route>
