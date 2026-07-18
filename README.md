@@ -5,6 +5,20 @@ Web frontend for the Expense Tracker app — a port of an existing mobile app
 frontend only; it consumes a separate ASP.NET Core Web API backend
 (`expense-tracker-backend`) over REST.
 
+## 🚀 Live Demo
+
+**[brave-coast-02bee8c10.7.azurestaticapps.net](https://brave-coast-02bee8c10.7.azurestaticapps.net/login)**
+
+Runs in a self-contained **demo mode** (an in-browser mock backend with seeded
+data — no server required), hosted on Azure Static Web Apps. On the login screen,
+click **"Fill demo login"** or use:
+
+- **Email:** `demo@example.com`
+- **Password:** `Password123!`
+
+Everything is interactive — create boards, add expenses, edit categories, switch
+light/dark — and changes persist for the session.
+
 ## Stack
 
 - React + TypeScript
