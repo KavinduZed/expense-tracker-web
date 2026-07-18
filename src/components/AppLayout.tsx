@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
@@ -20,6 +21,8 @@ import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined'
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined'
+import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
 import MenuIcon from '@mui/icons-material/Menu'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useAuth } from '../auth/useAuth'
@@ -32,11 +35,14 @@ interface NavItem {
   label: string
   to: string
   icon: ReactNode
+  soon?: boolean
 }
 
 const navItems: NavItem[] = [
   { label: 'Dashboard', to: '/', icon: <DashboardOutlinedIcon /> },
   { label: 'Expenses', to: '/expenses', icon: <ReceiptLongOutlinedIcon /> },
+  { label: 'Scan bill', to: '/scan', icon: <PhotoCameraOutlinedIcon />, soon: true },
+  { label: 'Forecast', to: '/forecast', icon: <TimelineOutlinedIcon />, soon: true },
   { label: 'Boards', to: '/boards', icon: <DashboardCustomizeOutlinedIcon /> },
   { label: 'Categories', to: '/categories', icon: <CategoryOutlinedIcon /> },
   { label: 'Profile', to: '/profile', icon: <PersonOutlineOutlinedIcon /> },
@@ -80,6 +86,9 @@ export default function AppLayout() {
               <ListItemText slotProps={{ primary: { sx: { fontSize: 14, fontWeight: 550 } } }}>
                 {item.label}
               </ListItemText>
+              {item.soon && (
+                <Chip label="Soon" size="small" variant="outlined" sx={{ height: 20, fontSize: 10 }} />
+              )}
             </ListItemButton>
           )
         })}

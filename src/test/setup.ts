@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom/vitest'
+import { configure } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import { server } from '../mocks/server'
+
+// Under heavy parallel load the default 1s findBy/waitFor timeout can flake; give async
+// queries more room so CI stays green without masking real failures.
+configure({ asyncUtilTimeout: 3000 })
 
 // This jsdom build ships an incomplete localStorage (missing removeItem), so install a
 // complete in-memory implementation for tests.

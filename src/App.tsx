@@ -5,6 +5,7 @@ import SignUpPage from './pages/SignUpPage'
 import BoardsPage from './pages/BoardsPage'
 import CategoriesPage from './pages/CategoriesPage'
 import ExpensesPage from './pages/ExpensesPage'
+import ProfilePage from './pages/ProfilePage'
 import ComingSoon from './pages/ComingSoon'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicOnlyRoute from './components/PublicOnlyRoute'
@@ -36,7 +37,10 @@ function App() {
           <Route path="/boards" element={<BoardsPage />} />
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/profile" element={<ComingSoon title="Profile" />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          {/* Phase 2 — backend not built yet */}
+          <Route path="/scan" element={<ComingSoon title="Scan a bill" />} />
+          <Route path="/forecast" element={<ComingSoon title="Forecast" />} />
         </Route>
       </Route>
 
