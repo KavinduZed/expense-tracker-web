@@ -19,6 +19,8 @@ export default defineConfig({
     env: {
       // Absolute base so MSW can match requests in unit tests.
       VITE_API_BASE_URL: 'http://localhost:5000',
+      // Keep demo mode out of tests regardless of any local .env.
+      VITE_ENABLE_MOCKS: 'false',
     },
   },
 })
