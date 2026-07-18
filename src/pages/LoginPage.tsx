@@ -13,6 +13,7 @@ import { useAuth } from '../auth/useAuth'
 import { validateEmail } from '../auth/validation'
 import { ApiError } from '../api/client'
 import ColorModeToggle from '../components/ColorModeToggle'
+import { DEMO_EMAIL, DEMO_PASSWORD, MOCKS_ENABLED } from '../mocks/demoConfig'
 
 interface LoginForm {
   email: string
@@ -26,8 +27,14 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>({ defaultValues: { email: '', password: '' } })
+
+  function fillDemo() {
+    setValue('email', DEMO_EMAIL)
+    setValue('password', DEMO_PASSWORD)
+  }
 
   async function onSubmit(values: LoginForm) {
     setFormError(null)
@@ -54,6 +61,16 @@ export default function LoginPage() {
         <Typography variant="h5" component="h1" gutterBottom>
           Sign in
         </Typography>
+        {MOCKS_ENABLED && (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            Demo mode — no backend needed.
+            <br />
+            <strong>{DEMO_EMAIL}</strong> / <strong>{DEMO_PASSWORD}</strong>
+            <Button size="small" onClick={fillDemo} sx={{ mt: 1, display: 'block' }}>
+              Fill demo login
+            </Button>
+          </Alert>
+        )}
         {formError && (
           <Alert severity="error" sx={{ mb: 2 }}>
             {formError}
