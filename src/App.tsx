@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import BoardsPage from './pages/BoardsPage'
+import CategoriesPage from './pages/CategoriesPage'
 import ComingSoon from './pages/ComingSoon'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicOnlyRoute from './components/PublicOnlyRoute'
@@ -33,7 +34,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/boards" element={<BoardsPage />} />
           <Route path="/expenses" element={<ComingSoon title="Expenses" />} />
-          <Route path="/categories" element={<ComingSoon title="Categories" />} />
+          <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/profile" element={<ComingSoon title="Profile" />} />
         </Route>
       </Route>
