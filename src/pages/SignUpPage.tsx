@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography'
 import { useAuth } from '../auth/useAuth'
 import { validateDisplayName, validateEmail, validatePassword } from '../auth/validation'
 import { ApiError } from '../api/client'
+import ColorModeToggle from '../components/ColorModeToggle'
 
 interface SignUpForm {
   displayName: string
@@ -47,6 +48,9 @@ export default function SignUpPage() {
 
   return (
     <Container maxWidth="xs" sx={{ py: 8 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+        <ColorModeToggle />
+      </Box>
       <Paper sx={{ p: 4 }} elevation={2}>
         <Typography variant="h5" component="h1" gutterBottom>
           Create your account
