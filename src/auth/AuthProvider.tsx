@@ -50,6 +50,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [],
   )
 
+  const updateUser = useCallback((next: UserDto) => setUser(next), [])
+
   const logout = useCallback(async () => {
     const refreshToken = getRefreshToken()
     try {
@@ -63,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [queryClient])
 
   return (
-    <AuthContext.Provider value={{ user, isInitializing, login, register, logout }}>
+    <AuthContext.Provider value={{ user, isInitializing, login, register, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   )
