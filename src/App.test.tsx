@@ -5,7 +5,12 @@ import userEvent from '@testing-library/user-event'
 import App from './App'
 import { server } from './mocks/server'
 import { clearTokens } from './auth/tokenStore'
-import { API_BASE, renderWithProviders, testUser } from './test/utils'
+import { API_BASE, renderWithProviders, testBoard, testUser } from './test/utils'
+
+// Boards load as soon as the app shell mounts; most authed-path tests need this stubbed.
+function boardsHandler() {
+  return http.get(`${API_BASE}/api/boards`, () => HttpResponse.json([testBoard]))
+}
 
 beforeEach(() => {
   clearTokens()
@@ -45,6 +50,7 @@ describe('App routing + auth', () => {
           user: testUser,
         }),
       ),
+      boardsHandler(),
     )
 
     renderWithProviders(<App />, ['/login'])
@@ -52,7 +58,7 @@ describe('App routing + auth', () => {
     await user.type(screen.getByLabelText(/password/i), 'Password1!')
     await user.click(screen.getByRole('button', { name: /sign in/i }))
 
-    expect(await screen.findByText(/signed in as ada lovelace/i)).toBeInTheDocument()
+    expect(await screen.findByText(/welcome back, ada lovelace/i)).toBeInTheDocument()
   })
 
   it('shows an error message on bad credentials', async () => {
@@ -88,11 +94,12 @@ describe('App routing + auth', () => {
           user: testUser,
         }),
       ),
+      boardsHandler(),
     )
 
     renderWithProviders(<App />, ['/'])
     await waitFor(() =>
-      expect(screen.getByText(/signed in as ada lovelace/i)).toBeInTheDocument(),
+      expect(screen.getByText(/welcome back, ada lovelace/i)).toBeInTheDocument(),
     )
   })
 })
