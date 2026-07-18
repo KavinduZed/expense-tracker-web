@@ -7,9 +7,21 @@ import { server } from './mocks/server'
 import { clearTokens } from './auth/tokenStore'
 import { API_BASE, renderWithProviders, testBoard, testUser } from './test/utils'
 
-// Boards load as soon as the app shell mounts; most authed-path tests need this stubbed.
-function boardsHandler() {
-  return http.get(`${API_BASE}/api/boards`, () => HttpResponse.json([testBoard]))
+// Landing on the dashboard mounts the shell (boards) and fires the dashboard aggregations
+// plus recent expenses. Authed-path tests stub them all so no request goes unhandled.
+function landingHandlers() {
+  return [
+    http.get(`${API_BASE}/api/boards`, () => HttpResponse.json([testBoard])),
+    http.get(`${API_BASE}/api/boards/${testBoard.id}/dashboard/spend-by-category`, () =>
+      HttpResponse.json([]),
+    ),
+    http.get(`${API_BASE}/api/boards/${testBoard.id}/dashboard/spend-over-time`, () =>
+      HttpResponse.json([]),
+    ),
+    http.get(`${API_BASE}/api/boards/${testBoard.id}/expenses`, () =>
+      HttpResponse.json({ items: [], page: 1, pageSize: 5, totalCount: 0 }),
+    ),
+  ]
 }
 
 beforeEach(() => {
@@ -50,7 +62,7 @@ describe('App routing + auth', () => {
           user: testUser,
         }),
       ),
-      boardsHandler(),
+      ...landingHandlers(),
     )
 
     renderWithProviders(<App />, ['/login'])
@@ -58,7 +70,8 @@ describe('App routing + auth', () => {
     await user.type(screen.getByLabelText(/password/i), 'Password1!')
     await user.click(screen.getByRole('button', { name: /sign in/i }))
 
-    expect(await screen.findByText(/welcome back, ada lovelace/i)).toBeInTheDocument()
+    // The authenticated shell loaded: the board switcher shows the current board.
+    expect(await screen.findByRole('button', { name: /personal/i })).toBeInTheDocument()
   })
 
   it('shows an error message on bad credentials', async () => {
@@ -94,12 +107,12 @@ describe('App routing + auth', () => {
           user: testUser,
         }),
       ),
-      boardsHandler(),
+      ...landingHandlers(),
     )
 
     renderWithProviders(<App />, ['/'])
     await waitFor(() =>
-      expect(screen.getByText(/welcome back, ada lovelace/i)).toBeInTheDocument(),
+      expect(screen.getByRole('button', { name: /personal/i })).toBeInTheDocument(),
     )
   })
 })
